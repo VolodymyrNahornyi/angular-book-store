@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+/* Центрування навігаційного меню */
+.navbar-nav {
+  justify-content: center;
+  flex-grow: 1; /* Дозволяє меню займати доступний простір і бути по центру */
+}
+
+/* Правий край для форми пошуку та авторизації */
+.d-flex.align-items-center {
+  justify-content: flex-end;
+}
