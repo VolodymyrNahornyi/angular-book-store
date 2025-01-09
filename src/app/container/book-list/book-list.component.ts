@@ -2,18 +2,16 @@ import { Component } from '@angular/core';
 import {SearchComponent} from "../search/search.component";
 import {Book} from "../../model/book.model";
 import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, NgStyle, SlicePipe} from "@angular/common";
+import {BookComponent} from "./book/book.component";
+import {FilterComponent} from "./filter/filter.component";
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
   imports: [
-    NgStyle,
-    DatePipe,
-    CurrencyPipe,
-    NgClass,
-    SlicePipe,
     NgForOf,
-    NgIf
+    BookComponent,
+    FilterComponent
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
@@ -397,5 +395,32 @@ export class BookListComponent {
       return Math.round(100 - (discountPrice / price) * 100);
 
     return price;
+  }
+
+  getAllBooksCount() {
+    return this.books.length;
+  }
+
+  getBooksAvailableInStockCount() {
+    return this.books.filter(b => b.isAvailable).length;
+  }
+
+  getBooksNotInStockCount() {
+    return this.books.filter(b => !b.isAvailable).length;
+  }
+
+  selectedFilterRadioButton: string = 'all';
+
+  getSelectedFilterRadioButton(value: string) {
+    this.selectedFilterRadioButton = value;
+  }
+
+  get filteredBooks() {
+    if (this.selectedFilterRadioButton === 'available') {
+      return this.books.filter(book => book.isAvailable);
+    } else if (this.selectedFilterRadioButton === 'outOfStock') {
+      return this.books.filter(book => !book.isAvailable);
+    }
+    return this.books;
   }
 }

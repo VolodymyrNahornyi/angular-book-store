@@ -1,0 +1,52 @@
+<div class="container mt-3">
+  <h5>Filter</h5>
+  <form>
+    <div class="d-inline-flex">
+      <div class="form-check me-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="showAll"
+          name="bookFilter"
+          value="all"
+          [(ngModel)]="selectedFilterRadioButton"
+          (change)="onSelectedFilterRadioButtonChanged()"
+        />
+        <label class="form-check-label" for="showAll">
+          {{ 'All (' + all + ')' }}
+        </label>
+      </div>
+
+      <div class="form-check me-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="showAvailable"
+          name="bookFilter"
+          value="available"
+          [(ngModel)]="selectedFilterRadioButton"
+          (change)="onSelectedFilterRadioButtonChanged()"
+        />
+        <label class="form-check-label" for="showAvailable">
+          {{ 'Is Available (' + inStock + ')' }}
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="showOutOfStock"
+          name="bookFilter"
+          value="outOfStock"
+          [(ngModel)]="selectedFilterRadioButton"
+          (change)="onSelectedFilterRadioButtonChanged()"
+        />
+        <label class="form-check-label" for="showOutOfStock">
+          {{ 'Not In Stock (' + outOfStock + ')' }}
+        </label>
+      </div>
+    </div>
+
+  </form>
+</div>
