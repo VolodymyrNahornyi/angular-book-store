@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {SearchComponent} from "../search/search.component";
 import {Book} from "../../model/book.model";
-import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, NgStyle, SlicePipe} from "@angular/common";
+import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
 import {FilterComponent} from "./filter/filter.component";
 
