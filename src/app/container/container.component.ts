@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SearchComponent} from "./search/search.component";
 import {BookListComponent} from "./book-list/book-list.component";
 
@@ -13,5 +13,9 @@ import {BookListComponent} from "./book-list/book-list.component";
   styleUrl: './container.component.css'
 })
 export class ContainerComponent {
+  searchText: string = '';
 
+  setSearchText(value: string) {
+    this.searchText = value;
+  }
 }

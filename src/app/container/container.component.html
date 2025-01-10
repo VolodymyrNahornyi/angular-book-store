@@ -1,2 +1,3 @@
-<app-search></app-search>
-<app-book-list></app-book-list>
+<app-search (searchTextChanged)="setSearchText($event)"></app-search>
+<app-book-list [searchText]="searchText"></app-book-list>
+

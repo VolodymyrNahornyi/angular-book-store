@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -389,6 +389,8 @@ export class BookListComponent {
     }
   ];
 
+  @Input() searchText: string = '';
+
   getDiscountPercentage(price: number, discountPrice: number | undefined) {
     if (discountPrice)
       return Math.round(100 - (discountPrice / price) * 100);
@@ -414,12 +416,20 @@ export class BookListComponent {
     this.selectedFilterRadioButton = value;
   }
 
-  get filteredBooks() {
-    if (this.selectedFilterRadioButton === 'available') {
-      return this.books.filter(book => book.isAvailable);
-    } else if (this.selectedFilterRadioButton === 'outOfStock') {
-      return this.books.filter(book => !book.isAvailable);
-    }
-    return this.books;
+  get filteredAndSearchedBooks() {
+    return this.books
+      .filter(book => {
+        // Фільтрація по радіокнопках
+        if (this.selectedFilterRadioButton === 'available') {
+          return book.isAvailable;
+        } else if (this.selectedFilterRadioButton === 'outOfStock') {
+          return !book.isAvailable;
+        }
+        return true; // Повернути всі книги, якщо вибрано "all"
+      })
+      .filter(book => {
+        // Пошук по заголовку
+        return book.title.toLowerCase().includes(this.searchText.toLowerCase());
+      });
   }
 }
