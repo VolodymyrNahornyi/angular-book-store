@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -390,6 +390,16 @@ export class BookListComponent {
   ];
 
   @Input() searchText: string = '';
+
+  @Output()
+  selectedBookEvent: EventEmitter<Book> = new EventEmitter<Book>();
+
+  selectedBook!: Book;
+
+  onSelectedBook(book: Book) {
+    this.selectedBook = book;
+    this.selectedBookEvent.emit(this.selectedBook);
+  }
 
   getDiscountPercentage(price: number, discountPrice: number | undefined) {
     if (discountPrice)

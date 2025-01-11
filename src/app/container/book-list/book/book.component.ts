@@ -18,6 +18,11 @@ import {Book} from "../../../model/book.model";
 })
 export class BookComponent {
   @Input() book!: Book;
-
   @Input() discount!: number;
+
+  openBookDetailModal() {
+    const modalElement = document.getElementById('bookDetailModal');
+    const modalInstance = new (window as any).bootstrap.Modal(modalElement);
+    modalInstance.show();
+  }
 }
