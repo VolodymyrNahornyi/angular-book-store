@@ -3,6 +3,7 @@ import {SearchComponent} from "./search/search.component";
 import {BookListComponent} from "./book-list/book-list.component";
 import {BookDetailComponent} from "./book-detail/book-detail.component";
 import {Book} from "../model/book.model";
+import {RecentBookListComponent} from "./recent-book-list/recent-book-list.component";
 
 @Component({
   selector: 'app-container',
@@ -10,7 +11,8 @@ import {Book} from "../model/book.model";
   imports: [
     SearchComponent,
     BookListComponent,
-    BookDetailComponent
+    BookDetailComponent,
+    RecentBookListComponent
   ],
   templateUrl: './container.component.html',
   styleUrl: './container.component.css'
