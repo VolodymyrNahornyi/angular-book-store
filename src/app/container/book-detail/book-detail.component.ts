@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Book} from "../../model/book.model";
+import {SetBackgroundDirective} from "../../directives/set-background.directive";
 
 @Component({
   selector: 'app-book-detail',
@@ -11,7 +12,8 @@ import {Book} from "../../model/book.model";
     NgForOf,
     NgIf,
     CurrencyPipe,
-    DatePipe
+    DatePipe,
+    SetBackgroundDirective
   ],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.css'
