@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgClass, NgIf, NgStyle, SlicePipe} from "@angular/common";
 import {Book} from "../../../model/book.model";
+import {HighlightDirective} from "../../../directives/highlight.directive";
 
 @Component({
   selector: 'app-book',
@@ -11,7 +12,8 @@ import {Book} from "../../../model/book.model";
     NgClass,
     SlicePipe,
     CurrencyPipe,
-    DatePipe
+    DatePipe,
+    HighlightDirective
   ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.css'
