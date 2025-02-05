@@ -4,6 +4,7 @@ import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
 import {FilterComponent} from "./filter/filter.component";
 import {BookService} from "../../services/book.service";
+import {DiscountService} from "../../services/discount.service";
 
 @Component({
   selector: 'app-book-list',
@@ -20,11 +21,15 @@ export class BookListComponent implements OnInit {
 
   books: Book[] = [];
 
-  constructor(private bookService: BookService) {
+  constructor(private bookService: BookService, private discountService: DiscountService) {
   }
 
   ngOnInit(): void {
     this.books = this.bookService.getAllBooks();
+  }
+
+  getDiscount(book: Book){
+    return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
   }
 
   @Input() searchText: string = '';
@@ -37,13 +42,6 @@ export class BookListComponent implements OnInit {
   onSelectedBook(book: Book) {
     this.selectedBook = book;
     this.selectedBookEvent.emit(this.selectedBook);
-  }
-
-  getDiscountPercentage(price: number, discountPrice: number | undefined) {
-    if (discountPrice)
-      return Math.round(100 - (discountPrice / price) * 100);
-
-    return price;
   }
 
   getAllBooksCount() {

@@ -37,7 +37,7 @@
                   <strong class="text-success" *ngIf="book.discountPrice"> {{ book.discountPrice | currency }}</strong>
                 </p>
                 <p *ngIf="book.discountPrice"
-                   class="badge bg-success">{{ getDiscountPercentage(book.price, book.discountPrice) }}% Off</p>
+                   class="badge bg-success">{{ getDiscount(book) }}% Off</p>
               </div>
 
               <div class="mt-3">
