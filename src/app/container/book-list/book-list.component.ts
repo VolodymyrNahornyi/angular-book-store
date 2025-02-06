@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -34,14 +34,8 @@ export class BookListComponent implements OnInit {
 
   @Input() searchText: string = '';
 
-  @Output()
-  selectedBookEvent: EventEmitter<Book> = new EventEmitter<Book>();
-
-  selectedBook!: Book;
-
-  onSelectedBook(book: Book) {
-    this.selectedBook = book;
-    this.selectedBookEvent.emit(this.selectedBook);
+  showBookDetail(book: Book){
+    this.bookService.onSelectedBook(book);
   }
 
   getAllBooksCount() {

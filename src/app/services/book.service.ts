@@ -1,10 +1,16 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Book} from "../model/book.model";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
+
+  selectedBookEvent: EventEmitter<Book> = new EventEmitter<Book>();
+
+  onSelectedBook(book: Book) {
+    this.selectedBookEvent.emit(book);
+  }
 
   books: Book[] = [
     {

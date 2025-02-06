@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {SearchComponent} from "./search/search.component";
 import {BookListComponent} from "./book-list/book-list.component";
 import {BookDetailComponent} from "./book-detail/book-detail.component";
-import {Book} from "../model/book.model";
 import {RecentBookListComponent} from "./recent-book-list/recent-book-list.component";
 
 @Component({
@@ -19,13 +18,8 @@ import {RecentBookListComponent} from "./recent-book-list/recent-book-list.compo
 })
 export class ContainerComponent {
   searchText: string = '';
-  selectedBook!: Book;
 
   setSearchText(value: string) {
     this.searchText = value;
-  }
-
-  setSelectedBook(value: Book) {
-    this.selectedBook = value;
   }
 }

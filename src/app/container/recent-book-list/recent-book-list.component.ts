@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {RecentBookComponent} from "./recent-book/recent-book.component";
 import {NgForOf} from "@angular/common";
@@ -24,13 +24,7 @@ export class RecentBookListComponent implements OnInit {
     this.recentBooks = this.bookService.getRecentBooks();
   }
 
-  @Output()
-  selectedBookEvent: EventEmitter<Book> = new EventEmitter<Book>();
-
-  selectedBook!: Book;
-
-  onSelectedBook(book: Book) {
-    this.selectedBook = book;
-    this.selectedBookEvent.emit(this.selectedBook);
+  showRecentBookDetail(book: Book){
+    this.bookService.onSelectedBook(book);
   }
 }

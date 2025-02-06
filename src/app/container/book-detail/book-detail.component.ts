@@ -1,8 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Book} from "../../model/book.model";
 import {SetBackgroundDirective} from "../../directives/set-background.directive";
 import {DiscountService} from "../../services/discount.service";
+import {BookService} from "../../services/book.service";
 
 @Component({
   selector: 'app-book-detail',
@@ -19,10 +20,17 @@ import {DiscountService} from "../../services/discount.service";
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.css'
 })
-export class BookDetailComponent {
-  @Input() book!: Book;
+export class BookDetailComponent implements OnInit {
 
-  constructor(private discountService: DiscountService) {}
+  constructor(private discountService: DiscountService, private bookService: BookService) {}
+
+  selectedBook!: Book;
+
+  ngOnInit(): void {
+    this.bookService.selectedBookEvent.subscribe((book: Book) => {
+      this.selectedBook = book;
+    })
+  }
 
   getDiscount(book: Book){
     return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
