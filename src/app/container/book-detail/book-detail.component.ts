@@ -24,7 +24,7 @@ export class BookDetailComponent implements OnInit {
 
   constructor(private discountService: DiscountService, private bookService: BookService) {}
 
-  selectedBook!: Book;
+  selectedBook: Book | undefined;
 
   ngOnInit(): void {
     this.bookService.selectedBookEvent.subscribe((book: Book) => {
@@ -32,7 +32,9 @@ export class BookDetailComponent implements OnInit {
     })
   }
 
-  getDiscount(book: Book){
-    return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
+  getDiscount(book: Book | undefined){
+    if (book != undefined)
+      return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
+    return 0;
   }
 }

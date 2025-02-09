@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -17,25 +17,35 @@ import {DiscountService} from "../../services/discount.service";
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnChanges {
 
   books: Book[] = [];
+
+  @Input()
+  searchText: string = '';
+
+  selectedFilterRadioButton: string = 'all';
 
   constructor(private bookService: BookService, private discountService: DiscountService) {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['searchText'] && !changes['searchText'].firstChange) {
+      console.log("searchText " + changes['searchText'].currentValue)
+      this.getBooks();
+    }
+  }
+
   ngOnInit(): void {
-    this.books = this.bookService.getAllBooks();
+    this.getBooks();
+  }
+
+  showBookDetail(book: Book) {
+    this.bookService.onSelectedBook(book);
   }
 
   getDiscount(book: Book){
     return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
-  }
-
-  @Input() searchText: string = '';
-
-  showBookDetail(book: Book){
-    this.bookService.onSelectedBook(book);
   }
 
   getAllBooksCount() {
@@ -50,26 +60,16 @@ export class BookListComponent implements OnInit {
     return this.books.filter(b => !b.isAvailable).length;
   }
 
-  selectedFilterRadioButton: string = 'all';
-
   getSelectedFilterRadioButton(value: string) {
     this.selectedFilterRadioButton = value;
+    this.getBooks();
   }
 
-  get filteredAndSearchedBooks() {
-    return this.books
-      .filter(book => {
-        // Фільтрація по радіокнопках
-        if (this.selectedFilterRadioButton === 'available') {
-          return book.isAvailable;
-        } else if (this.selectedFilterRadioButton === 'outOfStock') {
-          return !book.isAvailable;
-        }
-        return true; // Повернути всі книги, якщо вибрано "all"
-      })
-      .filter(book => {
-        // Пошук по заголовку
-        return book.title.toLowerCase().includes(this.searchText.toLowerCase());
-      });
+  getBooks() {
+    this.bookService.getAllBooks(this.selectedFilterRadioButton, this.searchText).subscribe({
+      next: (data) => this.books = data,
+      error: (err) => console.log(err),
+      complete: () => console.log('Books loaded successfully.')
+    });
   }
 }

@@ -21,7 +21,13 @@ export class RecentBookListComponent implements OnInit {
   constructor(private bookService: BookService) { }
 
   ngOnInit(): void {
-    this.recentBooks = this.bookService.getRecentBooks();
+    this.bookService.getRecentBooks().subscribe({
+      next: (data) => {
+        this.recentBooks = data
+      },
+      error: (err) => console.log(err),
+      complete: () => console.log('Recent books loaded successfully.')
+    });
   }
 
   showRecentBookDetail(book: Book){
