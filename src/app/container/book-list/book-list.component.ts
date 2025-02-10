@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
-import {NgForOf} from "@angular/common";
+import {AsyncPipe, NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
 import {FilterComponent} from "./filter/filter.component";
 import {BookService} from "../../services/book.service";
 import {DiscountService} from "../../services/discount.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-book-list',
@@ -12,29 +13,18 @@ import {DiscountService} from "../../services/discount.service";
   imports: [
     NgForOf,
     BookComponent,
-    FilterComponent
+    FilterComponent,
+    AsyncPipe
   ],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent {
 
-  books: Book[] = [];
-
-  searchText: string = '';
-
-  selectedFilterRadioButton: string = 'all';
+  books$: Observable<Book[]>;
 
   constructor(private bookService: BookService, private discountService: DiscountService) {
-  }
-
-
-  ngOnInit(): void {
-    this.bookService.searchTextChanged.subscribe((value: string) => {
-      this.searchText = value;
-      this.getBooks();
-    });
-    this.getBooks();
+    this.books$ = this.bookService.getFilteredBooks()
   }
 
   showBookDetail(book: Book) {
@@ -43,30 +33,5 @@ export class BookListComponent implements OnInit {
 
   getDiscount(book: Book) {
     return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
-  }
-
-  getAllBooksCount() {
-    return this.books.length;
-  }
-
-  getBooksAvailableInStockCount() {
-    return this.books.filter(b => b.isAvailable).length;
-  }
-
-  getBooksNotInStockCount() {
-    return this.books.filter(b => !b.isAvailable).length;
-  }
-
-  getSelectedFilterRadioButton(value: string) {
-    this.selectedFilterRadioButton = value;
-    this.getBooks();
-  }
-
-  getBooks() {
-    this.bookService.getAllBooks(this.selectedFilterRadioButton, this.searchText).subscribe({
-      next: (data) => this.books = data,
-      error: (err) => console.log(err),
-      complete: () => console.log('Books loaded successfully.')
-    });
   }
 }

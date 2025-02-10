@@ -1,32 +1,41 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {Observable} from "rxjs";
+import {BookService} from "../../../services/book.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-filter',
   standalone: true,
   imports: [
-    FormsModule
+    FormsModule,
+    AsyncPipe
   ],
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.css'
 })
-export class FilterComponent {
-  @Input()
-  all: number = 0;
+export class FilterComponent implements OnInit {
 
-  @Input()
-  inStock: number = 0;
+  totalBooks$: Observable<number>;
+  availableBooks$: Observable<number>;
+  outOfStockBooks$: Observable<number>;
 
-  @Input()
-  outOfStock: number = 0;
-
-  @Output()
-  selectedFilterRadioButtonChanged: EventEmitter<string> = new EventEmitter<string>();
+  constructor(private bookService: BookService) {
+    this.totalBooks$ = this.bookService.totalBooks$;
+    this.availableBooks$ = this.bookService.availableBooks$;
+    this.outOfStockBooks$ = this.bookService.outOfStockBooks$;
+  }
 
   selectedFilterRadioButton: string = 'all';
 
-  onSelectedFilterRadioButtonChanged() {
-    this.selectedFilterRadioButtonChanged.emit(this.selectedFilterRadioButton);
+  ngOnInit(): void {
+    this.bookService.filterSubject$.subscribe(filter => {
+      this.selectedFilterRadioButton = filter
+    });
   }
 
+  onFilterChange(filter: string) {
+    this.selectedFilterRadioButton = filter;
+    this.bookService.setFilter(filter);
+  }
 }
