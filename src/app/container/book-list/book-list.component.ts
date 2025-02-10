@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -17,11 +17,10 @@ import {DiscountService} from "../../services/discount.service";
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css'
 })
-export class BookListComponent implements OnInit, OnChanges {
+export class BookListComponent implements OnInit {
 
   books: Book[] = [];
 
-  @Input()
   searchText: string = '';
 
   selectedFilterRadioButton: string = 'all';
@@ -29,14 +28,12 @@ export class BookListComponent implements OnInit, OnChanges {
   constructor(private bookService: BookService, private discountService: DiscountService) {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['searchText'] && !changes['searchText'].firstChange) {
-      console.log("searchText " + changes['searchText'].currentValue)
-      this.getBooks();
-    }
-  }
 
   ngOnInit(): void {
+    this.bookService.searchTextChanged.subscribe((value: string) => {
+      this.searchText = value;
+      this.getBooks();
+    });
     this.getBooks();
   }
 
@@ -44,7 +41,7 @@ export class BookListComponent implements OnInit, OnChanges {
     this.bookService.onSelectedBook(book);
   }
 
-  getDiscount(book: Book){
+  getDiscount(book: Book) {
     return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
   }
 

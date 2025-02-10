@@ -16,10 +16,4 @@ import {RecentBookListComponent} from "./recent-book-list/recent-book-list.compo
   templateUrl: './container.component.html',
   styleUrl: './container.component.css'
 })
-export class ContainerComponent {
-  searchText: string = '';
-
-  setSearchText(value: string) {
-    this.searchText = value;
-  }
-}
+export class ContainerComponent {}

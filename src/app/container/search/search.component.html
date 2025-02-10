@@ -1,7 +1,7 @@
 <div class="container-sm">
   <div class="d-flex justify-content-center mt-3 align-items-center h-100">
     <form class="d-flex w-50 justify-content-center" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText" #searchInput>
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchText" [(ngModel)]="searchText">
       <button class="btn btn-outline-success" type="submit" (click)="setSearchText()">
         Search
       </button>
