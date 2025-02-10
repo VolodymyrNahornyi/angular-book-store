@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Book} from "../model/book.model";
-import {BehaviorSubject, combineLatest, map, Observable, of, Subject} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
