@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {BookService} from "../../services/book.service";
 
@@ -11,16 +11,10 @@ import {BookService} from "../../services/book.service";
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent {
   searchText: string = '';
 
   constructor(private bookService: BookService) {
-  }
-
-  ngOnInit(): void {
-    this.bookService.searchSubject$.subscribe(searchTerm => {
-      this.searchText = searchTerm;
-    })
   }
 
   setSearchText(searchText: string) {

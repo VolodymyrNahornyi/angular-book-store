@@ -1,6 +1,6 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Book} from "../model/book.model";
-import {BehaviorSubject, combineLatest, map, Observable, of} from "rxjs";
+import {BehaviorSubject, combineLatest, map, Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -384,7 +384,14 @@ export class BookService {
   private filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('all');
   public filterSubject$: Observable<string> = this.filterSubject.asObservable()
   private searchSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public searchSubject$: Observable<string> = this.searchSubject.asObservable()
+  public searchSubject$: Observable<string> = this.searchSubject.asObservable();
+  private selectedBookSubject: BehaviorSubject<Book | null> = new BehaviorSubject<Book | null>(null);
+  public selectedBookSubject$: Observable<Book | null> = this.selectedBookSubject.asObservable();
+
+  setSelectedBook(selectedBook: Book){
+    this.selectedBookSubject.next(selectedBook);
+  }
+
   setSearchText(searchTerm: string){
     this.searchSubject.next(searchTerm);
   }
@@ -400,12 +407,6 @@ export class BookService {
   public outOfStockBooks$: Observable<number> = this.getFilteredBooks().pipe(
     map(books => books.filter(book => !book.isAvailable).length)
   );
-
-  selectedBookEvent: EventEmitter<Book> = new EventEmitter<Book>();
-
-  onSelectedBook(book: Book) {
-    this.selectedBookEvent.emit(book);
-  }
 
   getFilteredBooks(): Observable<Book[]> {
     return combineLatest([this.books$, this.filterSubject$, this.searchSubject$]).pipe(
@@ -430,8 +431,8 @@ export class BookService {
     );
   }
 
-  getRecentBooks(): Observable<Book[]> {
-    return of(this.books.sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime())
-      .slice(0, 4));
-  }
+  public recentBooks: Observable<Book[]> = this.books$.pipe(
+    map(books => books.sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime())
+      .slice(0, 4))
+  );
 }

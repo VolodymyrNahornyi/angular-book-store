@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {Observable} from "rxjs";
 import {BookService} from "../../../services/book.service";
@@ -14,28 +14,21 @@ import {AsyncPipe} from "@angular/common";
   templateUrl: './filter.component.html',
   styleUrl: './filter.component.css'
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
 
   totalBooks$: Observable<number>;
   availableBooks$: Observable<number>;
   outOfStockBooks$: Observable<number>;
+  selectedFilter$: Observable<string>;
 
   constructor(private bookService: BookService) {
     this.totalBooks$ = this.bookService.totalBooks$;
     this.availableBooks$ = this.bookService.availableBooks$;
     this.outOfStockBooks$ = this.bookService.outOfStockBooks$;
-  }
-
-  selectedFilterRadioButton: string = 'all';
-
-  ngOnInit(): void {
-    this.bookService.filterSubject$.subscribe(filter => {
-      this.selectedFilterRadioButton = filter
-    });
+    this.selectedFilter$ = this.bookService.filterSubject$;
   }
 
   onFilterChange(filter: string) {
-    this.selectedFilterRadioButton = filter;
     this.bookService.setFilter(filter);
   }
 }

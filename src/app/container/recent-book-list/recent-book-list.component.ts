@@ -1,36 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {RecentBookComponent} from "./recent-book/recent-book.component";
-import {NgForOf} from "@angular/common";
+import {AsyncPipe, NgForOf} from "@angular/common";
 import {BookService} from "../../services/book.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-recent-book-list',
   standalone: true,
   imports: [
     RecentBookComponent,
-    NgForOf
+    NgForOf,
+    AsyncPipe
   ],
   templateUrl: './recent-book-list.component.html',
   styleUrl: './recent-book-list.component.css'
 })
-export class RecentBookListComponent implements OnInit {
+export class RecentBookListComponent {
 
-  recentBooks: Book[] = [];
+  recentBooks: Observable<Book[]>;
 
-  constructor(private bookService: BookService) { }
-
-  ngOnInit(): void {
-    this.bookService.getRecentBooks().subscribe({
-      next: (data) => {
-        this.recentBooks = data
-      },
-      error: (err) => console.log(err),
-      complete: () => console.log('Recent books loaded successfully.')
-    });
+  constructor(private bookService: BookService) {
+    this.recentBooks = this.bookService.recentBooks;
   }
 
-  showRecentBookDetail(book: Book){
-    this.bookService.onSelectedBook(book);
+  setSelectedRecentBook(book: Book) {
+    this.bookService.setSelectedBook(book);
   }
 }

@@ -4,7 +4,7 @@
     <div class="col-md-3" *ngFor="let book of books$ | async" >
       <app-book [book]="book"
                 [discount]="getDiscount(book)"
-                (click)="showBookDetail(book)"
+                (click)="setSelectedBook(book)"
       ></app-book>
     </div>
   </div>
