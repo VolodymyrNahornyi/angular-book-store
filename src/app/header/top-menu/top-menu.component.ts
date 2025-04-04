@@ -7,7 +7,6 @@ import {NgClass} from "@angular/common";
   standalone: true,
   imports: [
     RouterLink,
-    NgClass,
     RouterLinkActive
   ],
   templateUrl: './top-menu.component.html',
