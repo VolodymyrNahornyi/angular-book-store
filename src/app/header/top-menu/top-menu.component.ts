@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {NgClass} from "@angular/common";
 
 @Component({
   selector: 'top-menu',
   standalone: true,
   imports: [
-    RouterLink
+    RouterLink,
+    NgClass,
+    RouterLinkActive
   ],
   templateUrl: './top-menu.component.html',
   styleUrl: './top-menu.component.css'

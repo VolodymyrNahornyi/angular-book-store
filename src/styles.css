@@ -18,3 +18,7 @@ body{
 .d-flex.align-items-center {
   justify-content: flex-end;
 }
+.active {
+  font-size: 16px;
+  font-weight: bold;
+}
