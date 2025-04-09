@@ -23,8 +23,4 @@ export class RecentBookListComponent {
   constructor(private bookService: BookService) {
     this.recentBooks = this.bookService.recentBooks;
   }
-
-  setSelectedRecentBook(book: Book) {
-    this.bookService.setSelectedBook(book);
-  }
 }

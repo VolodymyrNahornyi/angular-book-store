@@ -385,12 +385,6 @@ export class BookService {
   public filterSubject$: Observable<string> = this.filterSubject.asObservable()
   private searchSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchSubject$: Observable<string> = this.searchSubject.asObservable();
-  private selectedBookSubject: BehaviorSubject<Book | null> = new BehaviorSubject<Book | null>(null);
-  public selectedBookSubject$: Observable<Book | null> = this.selectedBookSubject.asObservable();
-
-  setSelectedBook(selectedBook: Book){
-    this.selectedBookSubject.next(selectedBook);
-  }
 
   setSearchText(searchTerm: string){
     this.searchSubject.next(searchTerm);
@@ -412,7 +406,9 @@ export class BookService {
     return combineLatest([this.books$, this.filterSubject$, this.searchSubject$]).pipe(
       map(([books, filter, searchTerm]) => {
         const filteredByAvailability = this.applyAvailabilityFilter(books, filter);
-        return this.applySearchTermFilter(filteredByAvailability, searchTerm);
+        const filteredBySearch = this.applySearchTermFilter(filteredByAvailability, searchTerm);
+        // Додайте сортування тут, якщо потрібно
+        return filteredBySearch.sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime());
       })
     );
   }
@@ -435,4 +431,10 @@ export class BookService {
     map(books => books.sort((a, b) => b.publishedDate.getTime() - a.publishedDate.getTime())
       .slice(0, 4))
   );
+
+  getBookById(bookId: number): Observable<Book | undefined> {
+    return this.getFilteredBooks().pipe(
+      map(books => books.find(book => book.id === bookId))
+    );
+  }
 }

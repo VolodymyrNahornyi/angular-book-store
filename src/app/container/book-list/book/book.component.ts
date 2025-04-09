@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {CurrencyPipe, DatePipe, NgClass, NgIf, NgStyle, SlicePipe} from "@angular/common";
 import {Book} from "../../../model/book.model";
 import {HighlightDirective} from "../../../directives/highlight.directive";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-book',
@@ -18,13 +19,19 @@ import {HighlightDirective} from "../../../directives/highlight.directive";
   templateUrl: './book.component.html',
   styleUrl: './book.component.css'
 })
-export class BookComponent {
+export class BookComponent implements OnInit {
+
   @Input() book!: Book;
   @Input() discount!: number;
+  bookId: number | undefined;
 
-  openBookDetailModal() {
-    const modalElement = document.getElementById('bookDetailModal');
-    const modalInstance = new (window as any).bootstrap.Modal(modalElement);
-    modalInstance.show();
+  router: Router = inject(Router);
+
+  ngOnInit(): void {
+      this.bookId = this.book.id;
+  }
+
+  showBookDetail() {
+    this.router.navigate(['Books', this.bookId]);
   }
 }
