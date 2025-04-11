@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {BookService} from "../../services/book.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-search',
@@ -14,10 +14,13 @@ import {BookService} from "../../services/book.service";
 export class SearchComponent {
   searchText: string = '';
 
-  constructor(private bookService: BookService) {
+  constructor(private router: Router) {
   }
 
-  setSearchText(searchText: string) {
-    this.bookService.setSearchText(searchText);
+  onSearch() {
+    this.router.navigate(['Books'], {
+      queryParams: {search: this.searchText},
+      queryParamsHandling: "merge"
+    })
   }
 }
