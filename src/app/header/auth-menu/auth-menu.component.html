@@ -1,8 +1,8 @@
 <ul class="auth-menu list-unstyled d-flex mb-0">
   <li class="me-2">
-    <a href="#" class="nav-link active">Login</a>
+    <a class="nav-link active" routerLink="/Login" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Login</a>
   </li>
   <li>
-    <a href="#" class="nav-link active">Sign Up</a>
+    <a routerLink="/Login" [queryParams]="{logout: true}" class="nav-link active">Logout</a>
   </li>
 </ul>
