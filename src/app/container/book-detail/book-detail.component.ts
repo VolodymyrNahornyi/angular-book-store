@@ -5,7 +5,7 @@ import {SetBackgroundDirective} from "../../directives/set-background.directive"
 import {DiscountService} from "../../services/discount.service";
 import {BookService} from "../../services/book.service";
 import {Observable} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-book-detail',
@@ -18,7 +18,8 @@ import {ActivatedRoute} from "@angular/router";
     CurrencyPipe,
     DatePipe,
     SetBackgroundDirective,
-    AsyncPipe
+    AsyncPipe,
+    RouterLink
   ],
   templateUrl: './book-detail.component.html',
   styleUrl: './book-detail.component.css'
