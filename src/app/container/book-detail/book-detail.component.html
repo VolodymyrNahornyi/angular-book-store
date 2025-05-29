@@ -43,7 +43,7 @@
       <p [ngStyle]="{color: book.isAvailable ? 'green' : 'red'}" class="mt-3">
         <strong>{{ book.isAvailable ? 'Available' : 'Out of Stock' }}</strong>
       </p>
-      <button class="btn btn-primary mt-3 mb-5" [routerLink]="['/Books', 'Checkout']" *ngIf="book.isAvailable; else notifyMe">
+      <button class="btn btn-primary mt-3 mb-5" [routerLink]="['/Books', 'Checkout']" [state]="book" *ngIf="book.isAvailable; else notifyMe">
       Add to Cart
       </button>
       <ng-template #notifyMe>
