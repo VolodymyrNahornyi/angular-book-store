@@ -4,7 +4,6 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
 import {FilterComponent} from "./filter/filter.component";
 import {BookService} from "../../services/book.service";
-import {DiscountService} from "../../services/discount.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 
@@ -25,8 +24,7 @@ export class BookListComponent implements OnInit {
   books$: Observable<Book[]> | undefined;
   searchTerm: string = '';
 
-  constructor(private bookService: BookService, private discountService: DiscountService,
-              private route: ActivatedRoute) {
+  constructor(private bookService: BookService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -36,8 +34,4 @@ export class BookListComponent implements OnInit {
       this.books$ = this.bookService.getFilteredBooks(); // Одне присвоєння
     });
     }
-
-  getDiscount(book: Book) {
-    return this.discountService.getDiscountPercentage(book.price, book.discountPrice);
-  }
 }

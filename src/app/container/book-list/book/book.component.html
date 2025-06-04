@@ -21,7 +21,7 @@
       <strong class="text-success">{{ book.discountPrice | currency }}</strong>
     </p>
     <p *ngIf="book.discountPrice" class="badge bg-success">
-      {{ discount }}% Off
+      {{ book.price | percentage: book.discountPrice }}
     </p>
     <p class="card-text">
       <strong>Rating:</strong> {{ book.rating }}/5

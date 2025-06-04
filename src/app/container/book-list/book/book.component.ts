@@ -3,6 +3,7 @@ import {CurrencyPipe, DatePipe, NgClass, NgIf, NgStyle, SlicePipe} from "@angula
 import {Book} from "../../../model/book.model";
 import {HighlightDirective} from "../../../directives/highlight.directive";
 import {Router} from "@angular/router";
+import {PercentagePipe} from "../../../pipes/percentage.pipe";
 
 @Component({
   selector: 'app-book',
@@ -14,7 +15,8 @@ import {Router} from "@angular/router";
     SlicePipe,
     CurrencyPipe,
     DatePipe,
-    HighlightDirective
+    HighlightDirective,
+    PercentagePipe
   ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.css'

@@ -33,7 +33,7 @@
           </strong>
         </p>
         <p *ngIf="book.discountPrice" class="badge bg-success">
-          {{ getDiscount(book) }}% Off
+          {{ book.price | percentage: book.discountPrice }}
         </p>
       </div>
       <div class="mt-3">
