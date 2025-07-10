@@ -7,6 +7,7 @@ import {BookDetailComponent} from "./container/book-detail/book-detail.component
 import {LoginComponent} from "./login/login.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
 import {AuthGuardService} from "./services/auth-guard.service";
+import {RegistrationComponent} from "./registration/registration.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'Books', pathMatch: 'full'},
@@ -21,5 +22,6 @@ export const routes: Routes = [
   {path: 'About', component: AboutComponent},
   {path: 'Contacts', component: ContactsComponent, canDeactivate: [AuthGuardService]},
   {path: 'Login', component: LoginComponent},
+  {path: 'Register', component: RegistrationComponent},
   {path: '**', component: NotFoundComponent}
 ];

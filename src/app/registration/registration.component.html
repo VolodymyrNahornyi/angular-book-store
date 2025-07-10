@@ -1,0 +1,115 @@
+<div class="container mt-4 mb-4 d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg" style="width: 800px;">
+    <div class="card-body">
+      <h2 class="mb-4 card-title text-center">Registration Form</h2>
+      <form [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
+        <!-- First Name and Last Name -->
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" formControlName="firstName">
+            <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger">
+              <small *ngIf="firstName?.errors?.['required']">First name is required.</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Enter your last name" formControlName="lastName">
+            <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger">
+              <small *ngIf="lastName?.errors?.['required']">Last name is required.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Username and Email -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="username" placeholder="Choose a username" formControlName="username">
+            <button class="btn btn-secondary" type="button">Create a Username</button>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email">
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+            <small *ngIf="email?.errors?.['required']">Last name is required.</small>
+            <small *ngIf="email?.errors?.['email']">Invalid email format.</small>
+          </div>
+        </div>
+
+        <!-- Birthday -->
+        <div class="mb-3">
+          <label for="birthday" class="form-label">Birthday</label>
+          <input type="date" class="form-control" id="birthday" formControlName="birthday">
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" formControlName="gender">
+              <label class="form-check-label" for="genderMale">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female" formControlName="gender">
+              <label class="form-check-label" for="genderFemale">Female</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other" formControlName="gender">
+              <label class="form-check-label" for="genderOther">Other</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div formGroupName="address">
+          <div class="mb-3">
+            <label for="streetAddress" class="form-label">Street Address</label>
+            <input type="text" class="form-control" id="streetAddress" placeholder="1234 Main St" formControlName="street">
+            <div *ngIf="street?.invalid && (street?.dirty || street?.touched)" class="text-danger">
+              <small *ngIf="street?.errors?.['required']">Street is required.</small>
+            </div>
+          </div>
+
+          <!-- Country, City, Region -->
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label for="country" class="form-label">Country</label>
+              <select class="form-select" id="country" formControlName="country">
+                <option value="">Select your country</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+              </select>
+              <div *ngIf="country?.invalid && (country?.dirty || country?.touched)" class="text-danger">
+                <small *ngIf="country?.errors?.['required']">Country is required.</small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label for="city" class="form-label">City</label>
+              <input type="text" class="form-control" id="city" placeholder="Enter your city" formControlName="city">
+            </div>
+            <div class="col-md-4">
+              <label for="region" class="form-label">Region</label>
+              <input type="text" class="form-control" id="region" placeholder="Enter your region" formControlName="region">
+            </div>
+          </div>
+
+          <!-- Postal Code -->
+          <div class="mb-3">
+            <label for="postalCode" class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="postalCode" placeholder="Enter your postal code" formControlName="postal">
+            <div *ngIf="postal?.invalid && (postal?.dirty || postal?.touched)" class="text-danger">
+              <small *ngIf="postal?.errors?.['required']">Postal is required.</small>
+            </div>
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <button type="submit" value="submit" class="btn btn-primary w-100" [disabled]="!reactiveForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+
+</div>
