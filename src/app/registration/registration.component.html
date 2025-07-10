@@ -27,7 +27,12 @@
           <div class="input-group">
             <input type="text" class="form-control" id="username" placeholder="Choose a username" formControlName="username">
             <button class="btn btn-secondary" type="button">Create a Username</button>
-          </div>
+          </div><div class="mt-1">
+          <small *ngIf="username?.pending" class="text-warning">Checking username availability...</small>
+          <small *ngIf="username?.errors?.['usernameAllowed']" class="text-danger">
+            Username is already taken.
+          </small>
+        </div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -107,7 +112,7 @@
           </div>
         </div>
         <!-- Submit Button -->
-        <button type="submit" value="submit" class="btn btn-primary w-100" [disabled]="!reactiveForm.valid">Submit</button>
+        <button type="submit" value="submit" class="btn btn-primary w-100" >Submit</button>
       </form>
     </div>
   </div>

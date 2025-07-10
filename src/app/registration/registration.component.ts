@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
+import {CustomValidator} from "../validators/CustomValidator";
 
 @Component({
   selector: 'app-registration',
@@ -18,10 +19,10 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
-      firstName: new FormControl(null, Validators.required),
-      lastName: new FormControl(null, Validators.required),
+      firstName: new FormControl(null, [Validators.required, CustomValidator.noSpaceAllowed]),
+      lastName: new FormControl(null, [Validators.required, CustomValidator.noSpaceAllowed]),
       email: new FormControl(null, [Validators.required, Validators.email]),
-      username: new FormControl(null),
+      username: new FormControl(null, Validators.required, CustomValidator.checkUserAllowed),
       birthday: new FormControl(null),
       gender: new FormControl('male'),
       address: new FormGroup({
@@ -60,5 +61,9 @@ export class RegistrationComponent implements OnInit {
 
   get postal() {
     return this.reactiveForm.get('address.postal');
+  }
+
+  get username() {
+    return this.reactiveForm.get('username');
   }
 }
