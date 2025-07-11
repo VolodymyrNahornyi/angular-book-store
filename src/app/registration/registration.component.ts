@@ -66,4 +66,20 @@ export class RegistrationComponent implements OnInit {
   get username() {
     return this.reactiveForm.get('username');
   }
+
+  get birthday() {
+    return this.reactiveForm.get('birthday');
+  }
+
+  generateUsername() {
+    const firstPart = this.firstName?.value.slice(0, 3).toLowerCase();
+    const lastPart = this.lastName?.value.slice(0, 3).toLowerCase();
+
+    let birthday = new Date(this.birthday?.value);
+    const yearOfBirth = birthday.getFullYear();
+
+    let username = `${firstPart}${lastPart}${yearOfBirth}`
+    this.username?.setValue(username)
+  }
+
 }
