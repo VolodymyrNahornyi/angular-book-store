@@ -1,4 +1,5 @@
 export interface UserForCreation {
+  id?: string;
   firstName: string;
   lastName: string;
   username: string;

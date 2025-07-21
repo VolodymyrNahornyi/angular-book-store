@@ -1,0 +1,6 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<app-user-list *ngIf="!isLoading" [users]="users" (onUserDeleted)="onUserDelete($event)"></app-user-list>
