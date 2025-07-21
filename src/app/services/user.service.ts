@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {User} from "../model/user.model";
+import {HttpClient} from "@angular/common/http";
+import {UserForCreation} from "../model/userForCreation.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +15,16 @@ export class UserService {
     {id: 4, name: 'natalia_zhuravska', username: 'nataliazhuravska', password: 'bezpeka321'}
   ];
 
-  constructor() {
+  private apiUrl: string = 'https://bookstore-24567-default-rtdb.firebaseio.com/';
+
+  constructor(private http: HttpClient) {
   }
 
   getUsers(): User[] {
     return this.users;
   }
 
+  addUser(user: UserForCreation) {
+    return this.http.post(this.apiUrl + 'users.json', user);
+  }
 }

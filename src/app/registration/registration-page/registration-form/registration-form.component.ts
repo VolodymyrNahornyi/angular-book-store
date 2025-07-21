@@ -1,21 +1,23 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {CustomValidator} from "../validators/CustomValidator";
+import {CustomValidator} from "../../../validators/CustomValidator";
+import {UserForCreation} from "../../../model/userForCreation.model";
 
 @Component({
-  selector: 'app-registration',
+  selector: 'app-registration-form',
   standalone: true,
   imports: [
     ReactiveFormsModule,
     NgIf
   ],
-  templateUrl: './registration.component.html',
-  styleUrl: './registration.component.css'
+  templateUrl: './registration-form.component.html',
+  styleUrl: './registration-form.component.css'
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit {
 
   reactiveForm!: FormGroup;
+  @Output() registerUser: EventEmitter<UserForCreation> = new EventEmitter<UserForCreation>();
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
@@ -36,7 +38,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   OnFormSubmitted() {
-    console.log(this.reactiveForm);
+    this.registerUser.emit(this.reactiveForm.value as UserForCreation);
   }
 
   get firstName() {
