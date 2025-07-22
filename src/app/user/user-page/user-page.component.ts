@@ -45,10 +45,21 @@ export class UserPageComponent implements OnInit {
   }
 
   onUserUpdate(id: string){
+    this.isLoading = true;
     let selectedUser = this.users.find((user) => user.id === id);
     if (selectedUser) {
       this.userService.setUserEditMode(selectedUser);
     }
     this.router.navigate(['/Users/Edit']);
+    this.isLoading = false;
+  }
+
+  onUserDetail(id: string) {
+    this.isLoading = true;
+    this.userService.getUserDetails(id).subscribe((user) => {
+      this.userService.setSelectedUser(user);
+      this.router.navigate(['/Users/Detail']);
+      this.isLoading = false;
+    });
   }
 }

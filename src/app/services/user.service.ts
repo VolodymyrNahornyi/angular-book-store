@@ -30,6 +30,10 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
+  setSelectedUser(user: UserForCreation | null) {
+    this.selectedUserSubject.next(user);
+  }
+
   setUserEditMode(user: UserForCreation) {
     this.selectedUserSubject.next(user);
     this.isEditModeSubject.next(!!user);
@@ -77,6 +81,14 @@ export class UserService {
         const currentUsers = this.usersSubject.getValue();
         const updatedUsers = currentUsers.map(u => u.id === id ? { ...user, id } : u);
         this.usersSubject.next(updatedUsers);
+      })
+    );
+  }
+
+  getUserDetails(id: string | undefined) {
+    return this.http.get<UserForCreation>(this.apiUrl + 'users/' + id + '.json').pipe(
+      map(response => {
+        return { ...response, id: id };
       })
     );
   }

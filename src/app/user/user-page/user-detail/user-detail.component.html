@@ -1,0 +1,49 @@
+<div *ngIf="user" class="container mt-4 mb-4">
+  <div class="card">
+    <div class="card-header text-white bg-primary">
+      <h3 class="card-title mb-0">{{ user.firstName }} {{ user.lastName }}</h3>
+      <small class="text-light">{{ user.username }}</small>
+    </div>
+    <div class="card-body">
+      <h5 class="card-subtitle mb-3 text-muted">Personal Information</h5>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong>Email:</strong>
+          <p>{{ user.email }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>Birthday:</strong>
+          <p>{{ user.birthday | date: 'yyyy-MM-dd' }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>Gender:</strong>
+          <p>{{ user.gender | titlecase }}</p>
+        </div>
+      </div>
+
+      <h5 class="card-subtitle mb-3 text-muted">Address</h5>
+      <div class="row">
+        <div class="col-md-6">
+          <strong>Street:</strong>
+          <p>{{ user.address.street }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>City:</strong>
+          <p>{{ user.address.city }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>Region:</strong>
+          <p>{{ user.address.region }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>Postal Code:</strong>
+          <p>{{ user.address.postal }}</p>
+        </div>
+        <div class="col-md-6">
+          <strong>Country:</strong>
+          <p>{{ user.address.country }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

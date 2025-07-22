@@ -9,6 +9,7 @@ import {CheckoutComponent} from "./checkout/checkout.component";
 import {AuthGuardService} from "./services/auth-guard.service";
 import {RegistrationPageComponent} from "./registration/registration-page/registration-page.component";
 import {UserPageComponent} from "./user/user-page/user-page.component";
+import {UserDetailComponent} from "./user/user-page/user-detail/user-detail.component";
 
 export const routes: Routes = [
   {path: '', redirectTo: 'Books', pathMatch: 'full'},
@@ -26,5 +27,6 @@ export const routes: Routes = [
   {path: 'Users', component: UserPageComponent},
   {path: 'Register', component: RegistrationPageComponent},
   {path: 'Users/Edit', component: RegistrationPageComponent},
+  {path: 'Users/Detail', component: UserDetailComponent},
   {path: '**', component: NotFoundComponent}
 ];
