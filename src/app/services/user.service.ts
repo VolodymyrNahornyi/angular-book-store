@@ -21,7 +21,22 @@ export class UserService {
   private usersSubject = new BehaviorSubject<UserForCreation[]>([]);
   users$ = this.usersSubject.asObservable();
 
+  private selectedUserSubject = new BehaviorSubject<UserForCreation | null>(null);
+  selectedUser$ = this.selectedUserSubject.asObservable();
+
+  private isEditModeSubject = new BehaviorSubject<boolean>(false);
+  isEditMode$ = this.isEditModeSubject.asObservable();
+
   constructor(private http: HttpClient) {
+  }
+
+  setUserEditMode(user: UserForCreation) {
+    this.selectedUserSubject.next(user);
+    this.isEditModeSubject.next(!!user);
+  }
+
+  resetEditMode() {
+    this.isEditModeSubject.next(false);
   }
 
   getUsers(): User[] {
@@ -52,6 +67,16 @@ export class UserService {
       tap(() => {
         const currentUsers = this.usersSubject.getValue().filter(user => user.id !== id);
         this.usersSubject.next(currentUsers);
+      })
+    );
+  }
+
+  updateUser(id: string | undefined,  user: UserForCreation)  {
+    return this.http.put(this.apiUrl + 'users/' + id + '.json', user).pipe(
+      tap(() => {
+        const currentUsers = this.usersSubject.getValue();
+        const updatedUsers = currentUsers.map(u => u.id === id ? { ...user, id } : u);
+        this.usersSubject.next(updatedUsers);
       })
     );
   }

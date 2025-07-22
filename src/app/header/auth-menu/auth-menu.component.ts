@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Component} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {NgIf} from "@angular/common";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'auth-menu',
@@ -15,9 +16,15 @@ import {NgIf} from "@angular/common";
   styleUrl: './auth-menu.component.css'
 })
 export class AuthMenuComponent {
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, private userService: UserService, private router: Router) {
+  }
 
   logout() {
     this.authService.logout();
+  }
+
+  openRegisterForm() {
+    this.userService.resetEditMode();
+    this.router.navigate(["/Register"]);
   }
 }

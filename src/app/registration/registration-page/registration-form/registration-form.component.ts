@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
 import {CustomValidator} from "../../../validators/CustomValidator";
@@ -14,9 +14,12 @@ import {UserForCreation} from "../../../model/userForCreation.model";
   templateUrl: './registration-form.component.html',
   styleUrl: './registration-form.component.css'
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit, AfterViewInit {
 
   reactiveForm!: FormGroup;
+  selectedUserId: string = '';
+  @Input() isEditMode: boolean | undefined;
+  @Input() selectedUser: UserForCreation | undefined;
   @Output() registerUser: EventEmitter<UserForCreation> = new EventEmitter<UserForCreation>();
 
   ngOnInit(): void {
@@ -34,6 +37,47 @@ export class RegistrationFormComponent implements OnInit {
         region: new FormControl(null),
         postal: new FormControl(null, Validators.required)
       })
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.isEditMode && this.selectedUser && this.selectedUser.id) {
+      this.selectedUserId = this.selectedUser.id;
+      this.reactiveForm.patchValue({
+        firstName: this.selectedUser.firstName,
+        lastName: this.selectedUser.lastName,
+        email: this.selectedUser.email,
+        username: this.selectedUser.username,
+        birthday: this.selectedUser.birthday,
+        gender: this.selectedUser.gender,
+        address: {
+          street: this.selectedUser.address.street,
+          country: this.selectedUser.address.country,
+          city: this.selectedUser.address.city,
+          region: this.selectedUser.address.region,
+          postal: this.selectedUser.address.postal
+        }
+      });
+    } else {
+      this.clearFormFields();
+    }
+  }
+
+  private clearFormFields() {
+    this.reactiveForm.patchValue({
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      birthday: '',
+      gender: 'male',
+      address: {
+        street: '',
+        country:'Ukraine',
+        city: '',
+        region: '',
+        postal: ''
+      }
     });
   }
 

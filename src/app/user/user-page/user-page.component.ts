@@ -3,6 +3,7 @@ import {NgIf} from "@angular/common";
 import {UserListComponent} from "./user-list/user-list.component";
 import {UserForCreation} from "../../model/userForCreation.model";
 import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-page',
@@ -16,7 +17,7 @@ import {UserService} from "../../services/user.service";
 })
 export class UserPageComponent implements OnInit {
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   users: UserForCreation[] = [];
@@ -41,5 +42,13 @@ export class UserPageComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(() => {
       this.isLoading = false;
     });
+  }
+
+  onUserUpdate(id: string){
+    let selectedUser = this.users.find((user) => user.id === id);
+    if (selectedUser) {
+      this.userService.setUserEditMode(selectedUser);
+    }
+    this.router.navigate(['/Users/Edit']);
   }
 }

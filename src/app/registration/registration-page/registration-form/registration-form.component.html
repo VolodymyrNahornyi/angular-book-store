@@ -1,7 +1,7 @@
 <div class="container mt-4 mb-4 d-flex justify-content-center align-items-center vh-100">
   <div class="card shadow-lg" style="width: 800px;">
     <div class="card-body">
-      <h2 class="mb-4 card-title text-center">Registration Form</h2>
+      <h2 class="mb-4 card-title text-center">{{isEditMode ? 'Edit Form' : 'Registration Form'}}</h2>
       <form [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
         <!-- First Name and Last Name -->
         <div class="row mb-3">
@@ -125,7 +125,7 @@
           </div>
         </div>
         <!-- Submit Button -->
-        <button type="submit" value="submit" class="btn btn-primary w-100">Submit</button>
+        <button type="submit" value="submit" class="btn btn-primary w-100">{{isEditMode ? 'Edit' : 'Create'}}</button>
       </form>
     </div>
   </div>

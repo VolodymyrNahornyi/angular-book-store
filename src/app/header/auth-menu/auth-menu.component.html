@@ -3,7 +3,7 @@
     <a class="nav-link active" routerLink="/Login" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Login</a>
   </li>
   <li *ngIf="!authService.isAuthenticated()">
-    <a routerLink="/Register" class="nav-link active" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Register</a>
+    <a (click)="openRegisterForm()" class="nav-link active" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Register</a>
   </li>
   <li class="me-2" *ngIf="authService.isAuthenticated()">
     <a routerLink="/Login" [queryParams]="{ logout: true }" class="nav-link active"

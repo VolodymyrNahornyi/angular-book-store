@@ -18,11 +18,16 @@ export class UserListComponent {
 
   @Input() users!: UserForCreation[];
   @Output() onUserDeleted: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onUserUpdated: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {
   }
 
   deleteUser(id: string | undefined) {
     this.onUserDeleted.emit(id!);
+  }
+
+  updateUser(id: string | undefined){
+    this.onUserUpdated.emit(id);
   }
 }
