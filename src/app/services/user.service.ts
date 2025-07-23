@@ -16,7 +16,7 @@ export class UserService {
     {id: 4, name: 'natalia_zhuravska', username: 'nataliazhuravska', password: 'bezpeka321'}
   ];
 
-  private apiUrl: string = 'https://bookstore123-24567-default-rtdb.firebaseio.com/';
+  private apiUrl: string = 'https://bookstore-24567-default-rtdb.firebaseio.com/';
 
   private usersSubject = new BehaviorSubject<UserForCreation[]>([]);
   users$ = this.usersSubject.asObservable();
