@@ -3,6 +3,7 @@ export interface UserForCreation {
   firstName: string;
   lastName: string;
   username: string;
+  password: string;
   email: string;
   birthday: string;
   gender: 'male' | 'female' | 'other';

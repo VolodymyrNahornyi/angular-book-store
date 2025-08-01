@@ -1,4 +1,6 @@
-<app-registration-form (registerUser)="CreateUser($event)"
+<app-loader *ngIf="isLoading"></app-loader>
+<app-registration-form *ngIf="!isLoading"
+                   (registerUser)="CreateUser($event)"
                    [isEditMode]="isEditMode"
                    [selectedUser]="selectedUser"
 ></app-registration-form>

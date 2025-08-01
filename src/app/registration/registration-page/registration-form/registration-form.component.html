@@ -46,6 +46,15 @@
               Username is already taken.
             </small>
           </div>
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="password" placeholder="Enter a password" formControlName="password">
+            <button class="btn btn-secondary" type="button" (click)="generatePassword()">Create a Password</button>
+          </div>
+          <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="text-danger mt-1">
+            <small *ngIf="password?.errors?.['required']">Password is required.</small>
+            <small *ngIf="password?.errors?.['minlength']">Min length should be more than 6 digits.</small>
+          </div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>

@@ -1,0 +1,39 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg" style="width: 500px;">
+    <div class="card-body">
+      <h5 class="card-title text-center mb-4">Login</h5>
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginClicked()">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="text"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter your email">
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="text-danger">
+            <small *ngIf="email?.errors?.['required']">Email is required.</small>
+            <small *ngIf="email?.errors?.['email']">Invalid email format.</small>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Enter your password">
+          <small *ngIf="password?.touched && password?.errors?.['required']" class="text-danger">
+            Password is required.
+          </small>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary w-100">
+          Login
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

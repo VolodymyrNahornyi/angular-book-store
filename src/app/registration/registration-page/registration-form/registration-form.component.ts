@@ -28,6 +28,7 @@ export class RegistrationFormComponent implements OnInit, AfterViewInit {
       lastName: new FormControl(null, [Validators.required, CustomValidator.noSpaceAllowed]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       username: new FormControl(null, Validators.required, CustomValidator.checkUserAllowed),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
       birthday: new FormControl(null),
       gender: new FormControl('male'),
       address: new FormGroup({
@@ -48,6 +49,7 @@ export class RegistrationFormComponent implements OnInit, AfterViewInit {
         lastName: this.selectedUser.lastName,
         email: this.selectedUser.email,
         username: this.selectedUser.username,
+        password: this.selectedUser.password,
         birthday: this.selectedUser.birthday,
         gender: this.selectedUser.gender,
         address: {
@@ -69,6 +71,7 @@ export class RegistrationFormComponent implements OnInit, AfterViewInit {
       lastName: '',
       email: '',
       username: '',
+      password: '',
       birthday: '',
       gender: 'male',
       address: {
@@ -117,6 +120,10 @@ export class RegistrationFormComponent implements OnInit, AfterViewInit {
     return this.reactiveForm.get('birthday');
   }
 
+  get password() {
+    return this.reactiveForm.get('password');
+  }
+
   generateUsername() {
     const firstPart = this.firstName?.value.slice(0, 3).toLowerCase();
     const lastPart = this.lastName?.value.slice(0, 3).toLowerCase();
@@ -126,6 +133,15 @@ export class RegistrationFormComponent implements OnInit, AfterViewInit {
 
     let username = `${firstPart}${lastPart}${yearOfBirth}`
     this.username?.setValue(username)
+  }
+
+  generatePassword() {
+    let password = '';
+    for (let i = 0; i < 6; i++) {
+      const randomDigit = Math.floor(Math.random() * 10);
+      password += randomDigit;
+    }
+    this.password?.setValue(password);
   }
 
 }

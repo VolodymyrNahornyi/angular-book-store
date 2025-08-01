@@ -4,13 +4,15 @@ import {UserListComponent} from "./user-list/user-list.component";
 import {UserForCreation} from "../../model/userForCreation.model";
 import {UserService} from "../../services/user.service";
 import {Router} from "@angular/router";
+import {LoaderComponent} from "../../loader/loader.component";
 
 @Component({
   selector: 'app-user-page',
   standalone: true,
   imports: [
     NgIf,
-    UserListComponent
+    UserListComponent,
+    LoaderComponent
   ],
   templateUrl: './user-page.component.html',
   styleUrl: './user-page.component.css'
