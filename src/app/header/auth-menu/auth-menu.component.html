@@ -1,12 +1,14 @@
 <ul class="auth-menu list-unstyled d-flex mb-0">
-  <li class="me-2" *ngIf="!authService.isAuthenticated()">
-    <a class="nav-link active" routerLink="/Login" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">Login</a>
+  <li class="me-2">
+    <a *ngIf="!isLoggedIn" class="nav-link active" routerLink="/Login" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{exact: true}">Login</a>
   </li>
-  <li *ngIf="!authService.isAuthenticated()">
-    <a (click)="openRegisterForm()" class="nav-link active" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">Register</a>
+  <li>
+    <a *ngIf="isLoggedIn" (click)="logOut()" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}"
+       class="nav-link active">Logout</a>
   </li>
-  <li class="me-2" *ngIf="authService.isAuthenticated()">
-    <a routerLink="/Login" [queryParams]="{ logout: true }" class="nav-link active"
-       (click)="logout()">Logout</a>
+  <li class="me-2">
+    <a *ngIf="!isLoggedIn" (click)="openRegisterForm()" class="nav-link active" [routerLinkActive]="'active'"
+       [routerLinkActiveOptions]="{exact: true}">Register</a>
   </li>
 </ul>

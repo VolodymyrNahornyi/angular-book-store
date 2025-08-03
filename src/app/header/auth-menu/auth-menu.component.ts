@@ -1,8 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {NgIf} from "@angular/common";
 import {UserService} from "../../services/user.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'auth-menu',
@@ -15,16 +16,31 @@ import {UserService} from "../../services/user.service";
   templateUrl: './auth-menu.component.html',
   styleUrl: './auth-menu.component.css'
 })
-export class AuthMenuComponent {
-  constructor(public authService: AuthService, private userService: UserService, private router: Router) {
+export class AuthMenuComponent implements OnInit, OnDestroy{
+
+  isLoggedIn: boolean = false;
+  private userSubject!: Subscription;
+
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) {
   }
 
-  logout() {
-    this.authService.logout();
+  ngOnDestroy(): void {
+    this.userSubject.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    this.userSubject = this.authService.user$.subscribe((user) =>{
+      this.isLoggedIn = user ? true : false;
+    });
   }
 
   openRegisterForm() {
     this.userService.resetEditMode();
     this.router.navigate(["/Register"]);
+  }
+
+
+  logOut() {
+    this.authService.signOut();
   }
 }

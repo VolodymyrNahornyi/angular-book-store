@@ -9,12 +9,13 @@ import {provideAnimations} from "@angular/platform-browser/animations";
 import {importProvidersFrom} from "@angular/core";
 import {ToastrModule} from "ngx-toastr";
 import {notificationInterceptor} from "./app/interceptors/notification.interceptor";
+import {authInterceptor} from "./app/interceptors/auth.interceptor";
 
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
     provideRouter(routes),
-    provideHttpClient(withInterceptors([loggingInterceptor, notificationInterceptor])),
+    provideHttpClient(withInterceptors([loggingInterceptor, notificationInterceptor, authInterceptor])),
     provideAnimations(),
     importProvidersFrom(
       ToastrModule.forRoot({

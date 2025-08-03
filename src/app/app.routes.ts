@@ -5,7 +5,7 @@ import {ContactsComponent} from "./contacts/contacts.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {BookDetailComponent} from "./container/book-detail/book-detail.component";
 import {CheckoutComponent} from "./checkout/checkout.component";
-import {AuthGuardService} from "./services/auth-guard.service";
+import {authGuard} from "./services/auth-guard.service";
 import {RegistrationPageComponent} from "./registration/registration-page/registration-page.component";
 import {UserPageComponent} from "./user/user-page/user-page.component";
 import {UserDetailComponent} from "./user/user-page/user-detail/user-detail.component";
@@ -17,12 +17,12 @@ export const routes: Routes = [
   {
     path: 'Books', children: [
 
-      {path: 'Checkout', component: CheckoutComponent, canActivate: [AuthGuardService]},
+      {path: 'Checkout', component: CheckoutComponent, canActivate: [authGuard]},
       {path: ':id', component: BookDetailComponent}
     ]
   },
   {path: 'About', component: AboutComponent},
-  {path: 'Contacts', component: ContactsComponent, canDeactivate: [AuthGuardService]},
+  {path: 'Contacts', component: ContactsComponent, canDeactivate: [authGuard]},
   {path: 'Login', component: LoginPageComponent},
   {path: 'Users', component: UserPageComponent},
   {path: 'Register', component: RegistrationPageComponent},

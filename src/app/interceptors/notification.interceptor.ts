@@ -21,6 +21,9 @@ export const notificationInterceptor: HttpInterceptorFn = (req, next) => {
         case 'OPERATION_NOT_ALLOWED':
           errorMessage = 'This operation is not allowed.';
           break;
+        case 'INVALID_LOGIN_CREDENTIALS':
+          errorMessage = 'Email or password are wrong.';
+          break;
       }
       toastr.error(errorMessage);
       return throwError(() => errorMessage);

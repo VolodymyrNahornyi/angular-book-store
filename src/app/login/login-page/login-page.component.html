@@ -1,1 +1,2 @@
-<app-login (loginUser)="login($event)"></app-login>
+<app-loader *ngIf="isLoading"></app-loader>
+<app-login *ngIf="!isLoading" (loginUser)="login($event)"></app-login>
