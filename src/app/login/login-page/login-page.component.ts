@@ -26,11 +26,11 @@ export class LoginPageComponent {
 
   login(data: LoginModel) {
     this.authService.signIn(data.email, data.password).subscribe({
-      next: (response) => {
+      next: () => {
         this.isLoading = false;
         this.router.navigate(['/']);
       },
-      error: (errMsg) => {
+      error: () => {
         this.isLoading = false;
       }
     });

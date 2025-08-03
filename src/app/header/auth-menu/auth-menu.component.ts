@@ -30,7 +30,7 @@ export class AuthMenuComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.userSubject = this.authService.user$.subscribe((user) =>{
-      this.isLoggedIn = user ? true : false;
+      this.isLoggedIn = !!user;
     });
   }
 

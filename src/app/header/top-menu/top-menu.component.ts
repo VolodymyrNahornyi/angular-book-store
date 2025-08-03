@@ -23,7 +23,7 @@ export class TopMenuComponent implements OnInit{
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) =>{
-      this.isLoggedIn = user ? true : false;
+      this.isLoggedIn = !!user;
     });
   }
 }
