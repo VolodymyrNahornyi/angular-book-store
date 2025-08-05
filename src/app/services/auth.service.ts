@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {UserForCreation} from "../model/userForCreation.model";
 import {AuthResponseModel} from "../model/AuthResponseModel";
-import {BehaviorSubject, tap} from "rxjs";
+import {BehaviorSubject, Observable, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {AuthenticatedUser} from "../model/authenticated-user.model";
 
@@ -28,32 +28,35 @@ export class AuthService {
   private handleCreateAuthenticatedUser(res: AuthResponseModel) {
     const expiresInTs = new Date().getTime() + +res.expiresIn * 1000;
     const expiresIn = new Date(expiresInTs);
-    const user = new AuthenticatedUser(res.email, res.localId, res.idToken, expiresIn);
+    const user = new AuthenticatedUser(res.email, res.localId, res.idToken, expiresIn, res.refreshToken);
     this.userSubject.next(user);
-    this.autoLogOut(+res.expiresIn * 1000);
 
+    this.setAuthenticatedUserData(user);
+  }
+
+  getAuthenticatedUserData(): AuthenticatedUser | null | any {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
+  }
+
+  setAuthenticatedUserData(user: AuthenticatedUser) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
+  removeAuthenticatedUserData(key: string) {
+    localStorage.removeItem('user');
+  }
+
   autoLogin() {
-    const userData = localStorage.getItem('user');
-    const user = userData ? JSON.parse(userData) : null;
+    const user = this.getAuthenticatedUserData();
     if (!user) {
       return
     }
 
-    const loggedUser = new AuthenticatedUser(user.email, user.id, user._token, user._expiresIn);
+    const loggedUser = new AuthenticatedUser(user.email, user.id, user._token, user._expiresIn, user._refreshToken);
     if (loggedUser.token) {
       this.userSubject.next(loggedUser);
-      const timerValue = user._expiresIn.getTime() - new Date().getTime();
-      this.autoLogOut(timerValue);
     }
-  }
-
-  autoLogOut(expireTime: number){
-    this.expireTimer = setTimeout(() => {
-      this.signOut();
-    }, expireTime);
   }
 
   signIn(email: string, password: string){
@@ -69,11 +72,17 @@ export class AuthService {
   signOut() {
     this.userSubject.next(null);
     this.router.navigate(["/Login"]);
-    localStorage.removeItem('user');
+    this.removeAuthenticatedUserData('user');
+  }
 
-    if (this.expireTimer) {
-      clearTimeout(this.expireTimer);
-    }
-    this.expireTimer = null;
+  refreshAccessToken(refreshToken: string): Observable<any> {
+    const body = new URLSearchParams();
+    body.set('grant_type', 'refresh_token');
+    body.set('refresh_token', refreshToken);
+
+    return this.http.post<AuthResponseModel>('https://securetoken.googleapis.com/v1/token?key=AIzaSyDkl-yk_32CDsk5lpEeQk4RawOxjr5nXM8',
+      body.toString(), {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
   }
 }
