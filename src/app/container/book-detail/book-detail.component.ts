@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit, Signal} from '@angular/core';
 import {AsyncPipe, CurrencyPipe, DatePipe, NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Book} from "../../model/book.model";
 import {SetBackgroundDirective} from "../../directives/set-background.directive";
@@ -26,18 +26,14 @@ import {PercentagePipe} from "../../pipes/percentage.pipe";
   styleUrl: './book-detail.component.css'
 })
 export class BookDetailComponent implements OnInit {
+  private bookService = inject(BookService);
+  private activatedRoute = inject(ActivatedRoute);
 
-  selectedBook$!: Observable<Book | undefined>;
-  bookId!: number;
-
-  constructor(private bookService: BookService,
-              private activatedRoute: ActivatedRoute) {
-
-  }
+  selectedBook!: Signal<Book | undefined>;
 
   ngOnInit(): void {
-    // this.bookId = this.activatedRoute.snapshot.params['id']; // snapshot.params['id'] returns any type
-    this.bookId = +this.activatedRoute.snapshot.paramMap.get('id')!; // paramMap.get('id') returns string | null type
-    this.selectedBook$ = this.bookService.getBookById(this.bookId);
-    }
+    const bookId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    // getBookById тепер повертає сигнал
+    this.selectedBook = this.bookService.getBookById(bookId);
+  }
 }

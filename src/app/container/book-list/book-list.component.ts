@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {BookComponent} from "./book/book.component";
@@ -20,18 +20,17 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './book-list.component.css'
 })
 export class BookListComponent implements OnInit {
+  private bookService = inject(BookService);
+  private route = inject(ActivatedRoute);
 
-  books$: Observable<Book[]> | undefined;
-  searchTerm: string = '';
-
-  constructor(private bookService: BookService, private route: ActivatedRoute) {
-  }
+  // Напряму отримуємо сигнал з сервісу
+  books = this.bookService.filteredBooks;
 
   ngOnInit(): void {
+    // Продовжуємо слухати параметри роутера, але тепер оновлюємо сигнал
     this.route.queryParamMap.subscribe(params => {
-      this.searchTerm = params.get('search') || '';
-      this.bookService.setSearchText(this.searchTerm);
-      this.books$ = this.bookService.getFilteredBooks(); // Одне присвоєння
+      const searchTerm = params.get('search') || '';
+      this.bookService.searchTerm.set(searchTerm);
     });
-    }
+  }
 }

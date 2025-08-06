@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Book} from "../../model/book.model";
 import {RecentBookComponent} from "./recent-book/recent-book.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
@@ -16,11 +16,7 @@ import {Observable} from "rxjs";
   templateUrl: './recent-book-list.component.html',
   styleUrl: './recent-book-list.component.css'
 })
-export class RecentBookListComponent {
-
-  recentBooks: Observable<Book[]>;
-
-  constructor(private bookService: BookService) {
-    this.recentBooks = this.bookService.recentBooks;
-  }
+export class RecentBookListComponent{
+  private bookService = inject(BookService);
+  recentBooks = this.bookService.recentBooks;
 }

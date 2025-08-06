@@ -2,25 +2,25 @@
   <h2>Checkout</h2>
   <div class="row">
     <div class="col-md-4">
-      <img [src]="book.coverImage" class="img-fluid rounded" alt="The Silent Patient Cover">
+      <img [src]="book().coverImage" class="img-fluid rounded" alt="The Silent Patient Cover">
     </div>
     <div class="col-md-8">
-      <h3 class="mb-3">{{book.title}}</h3>
-      <p><strong>Author: </strong> {{book.author}}</p>
+      <h3 class="mb-3">{{book().title}}</h3>
+      <p><strong>Author: </strong> {{book().author}}</p>
       <div class="price-details">
         <p><strong>Price: </strong>
-          <span [ngClass]="{'text-decoration-line-through text-danger': book.discountPrice}">
-            {{ book.price | currency }}
+          <span [ngClass]="{'text-decoration-line-through text-danger': book().discountPrice}">
+            {{ book().price | currency }}
           </span>
         </p>
-        <p *ngIf="book.discountPrice" class="text-success">
-          <strong>Discounted Price: </strong> {{ book.discountPrice | currency }}
+        <p *ngIf="book().discountPrice" class="text-success">
+          <strong>Discounted Price: </strong> {{ book().discountPrice | currency }}
         </p>
         <p><strong>Tax (10%): </strong>
-          <span> {{ getTax(book.discountPrice || book.price) | currency }}</span>
+          <span> {{ tax() | currency }}</span>
         </p>
         <p><strong>Total: </strong>
-          <span> {{ getTotal(book.discountPrice || book.price) | currency }}</span>
+          <span> {{ total() | currency }}</span>
         </p>
       </div>
       <!-- Form for payment details -->

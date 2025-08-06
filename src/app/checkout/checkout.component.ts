@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {CurrencyPipe, NgClass, NgIf} from "@angular/common";
 import {Router} from "@angular/router";
 import {Book} from "../model/book.model";
@@ -15,19 +15,20 @@ import {Book} from "../model/book.model";
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent implements OnInit {
+  book = signal<Book>({} as Book);
 
-  router: Router = inject(Router);
-  book: Book = {} as Book;
+  tax = computed(() => {
+    const price = this.book().discountPrice || this.book().price || 0;
+    return price * 0.1;
+  });
+
+  total = computed(() => {
+    const price = this.book().discountPrice || this.book().price || 0;
+    return price + this.tax();
+  });
 
   ngOnInit(): void {
-    this.book = history.state;
-  }
-
-  getTax(price: number): number {
-    return price * 0.1; // Розрахунок податку як 10% від ціни
-  }
-
-  getTotal(price: number): number {
-    return price + this.getTax(price); // Загальна вартість з урахуванням податку
+    // Встановлюємо значення сигналу
+    this.book.set(history.state);
   }
 }

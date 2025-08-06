@@ -9,11 +9,11 @@
           id="showAll"
           name="bookFilter"
           value="all"
-          [checked]="(selectedFilter$ | async) === 'all'"
+          [checked]="bookService.availabilityFilter() === 'all'"
           (change)="onFilterChange('all')"
         />
         <label class="form-check-label" for="showAll">
-          {{ 'All (' + (totalBooks$ | async) + ')' }}
+          {{ 'All (' + bookService.totalBooks() + ')' }}
         </label>
       </div>
 
@@ -24,11 +24,11 @@
           id="showAvailable"
           name="bookFilter"
           value="available"
-          [checked]="(selectedFilter$ | async) === 'available'"
+          [checked]="bookService.availabilityFilter() === 'available'"
           (change)="onFilterChange('available')"
         />
         <label class="form-check-label" for="showAvailable">
-          {{ 'Is Available (' + (availableBooks$ | async) + ')' }}
+          {{ 'Is Available (' + bookService.availableBooks() + ')' }}
         </label>
       </div>
 
@@ -39,11 +39,11 @@
           id="showOutOfStock"
           name="bookFilter"
           value="outOfStock"
-          [checked]="(selectedFilter$ | async) === 'outOfStock'"
+          [checked]="bookService.availabilityFilter() === 'outOfStock'"
           (change)="onFilterChange('outOfStock')"
         />
         <label class="form-check-label" for="showOutOfStock">
-          {{ 'Out Of Stock (' + (outOfStockBooks$ | async) + ')' }}
+          {{ 'Out Of Stock (' + bookService.outOfStockBooks() + ')' }}
         </label>
       </div>
     </div>
