@@ -18,9 +18,10 @@ export class SearchComponent {
   }
 
   onSearch() {
+    const queryParams = this.searchText ? { search: this.searchText } : null;
+
     this.router.navigate(['Books'], {
-      queryParams: {search: this.searchText},
-      queryParamsHandling: "merge"
-    })
+      queryParams: queryParams,
+    });
   }
 }
